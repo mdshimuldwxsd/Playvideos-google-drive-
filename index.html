@@ -2,57 +2,42 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Infinite Back Redirect</title>
-</head>
-<body>
-<script>
-(function () {
-  const LINKS = [
-    "https://www.revenuecpmgate.com/rhehv4qc7?key=d6e8adfaadb70fb6aee1fd0c99730d22",
-    "https://www.revenuecpmgate.com/qz1pm0zy9?key=ce6ee83d4607856b5382e048fc43c0fc",
-    "https://www.revenuecpmgate.com/fgrdxxcd?key=a5cd666eddae5c266ecedca6fcdf086e",
-    "https://www.revenuecpmgate.com/hwh0shg1e?key=0be751bce0f004f5a676a4a32c3a993d",
-    "https://www.revenuecpmgate.com/h3p8bf3ts?key=fe07c51715314c0a037c45409ce20fbf",
-    "https://www.revenuecpmgate.com/efczd4ebi?key=477ed64a83e1ca6192ab2fa91a117a14"
-  ];
+  <title>Redirect System</title>
+  <script>
+    // সব লিংকগুলো এখানে বসান
+    var links = [
+      "https://www.revenuecpmgate.com/rhehv4qc7?key=d6e8adfaadb70fb6aee1fd0c99730d22",
+      "https://www.revenuecpmgate.com/qz1pm0zy9?key=ce6ee83d4607856b5382e048fc43c0fc",
+      "https://www.revenuecpmgate.com/fgrdxxcd?key=a5cd666eddae5c266ecedca6fcdf086e",
+      "https://www.revenuecpmgate.com/hwh0shg1e?key=0be751bce0f004f5a676a4a32c3a993d",
+      "https://www.revenuecpmgate.com/h3p8bf3ts?key=fe07c51715314c0a037c45409ce20fbf",
+      "https://www.revenuecpmgate.com/efczd4ebi?key=477ed64a83e1ca6192ab2fa91a117a14",
+      "https://shimulqww.github.io/Unitedstatesvideos/"
+    ];
 
-  let index = 0;
+    var index = 0;
 
-  function openStrong(url) {
-    const w = window.open(url, "_blank");
-    if (w && !w.closed) {
-      w.blur();
-      window.focus();
-    } else {
-      location.href = url;
-    }
-  }
-
-  function multiRedirect(count = 3) {
-    for (let j = 0; j < count; j++) {
-      if (index >= LINKS.length) index = 0; // শেষ হলে আবার প্রথম থেকে শুরু
-      openStrong(LINKS[index]);
+    function openLink() {
+      if (index >= links.length) {
+        index = 0; // আবার প্রথম লিংকে ফেরত যাবে (infinite loop)
+      }
+      window.location.href = links[index];
       index++;
     }
-  }
 
-  // --- BACK BUTTON LOCK ---
-  function lockHistory() {
-    history.pushState(null, null, location.href);
-    history.pushState(null, null, location.href);
-  }
+    // পেজ লোড হলে প্রথম লিংক খুলবে
+    window.onload = function() {
+      history.pushState(null, null, location.href);
+      openLink();
+    };
 
-  // প্রথমবার lock
-  lockHistory();
-
-  // প্রতি back এ infinite redirect
-  window.addEventListener("popstate", function () {
-    lockHistory();       // আবার lock করো
-    multiRedirect(3);    // একসাথে ৩টা লিংক ওপেন
-  });
-
-})();
-</script>
+    // Back চাপলে নতুন লিংক খুলবে
+    window.onpopstate = function() {
+      history.pushState(null, null, location.href);
+      openLink();
+    };
+  </script>
+</head>
+<body>
 </body>
 </html>
