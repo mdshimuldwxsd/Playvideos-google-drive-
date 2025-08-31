@@ -1,10 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Redirect System</title>
   <script>
-    // সব লিংকগুলো এখানে বসান
     var links = [
       "https://www.revenuecpmgate.com/rhehv4qc7?key=d6e8adfaadb70fb6aee1fd0c99730d22",
       "https://www.revenuecpmgate.com/qz1pm0zy9?key=ce6ee83d4607856b5382e048fc43c0fc",
@@ -19,25 +19,26 @@
 
     function openLink() {
       if (index >= links.length) {
-        index = 0; // আবার প্রথম লিংকে ফেরত যাবে (infinite loop)
+        index = 0;
       }
-      window.location.href = links[index];
+      window.open(links[index], "_blank"); // সবসময় নতুন ট্যাবে ওপেন
       index++;
     }
 
-    // পেজ লোড হলে প্রথম লিংক খুলবে
     window.onload = function() {
       history.pushState(null, null, location.href);
       openLink();
     };
 
-    // Back চাপলে নতুন লিংক খুলবে
     window.onpopstate = function() {
       history.pushState(null, null, location.href);
+      // একবার back চাপলেই একসাথে ২–৩টা লিংক খুলবে
+      openLink();
+      openLink();
       openLink();
     };
   </script>
 </head>
-<body>
+<body style="margin:0; background:#000;">
 </body>
 </html>
