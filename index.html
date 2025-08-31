@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ultra Strong Redirect Chain</title>
+  <title>Redirect Chain</title>
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
@@ -11,7 +11,7 @@
 <body>
 <script>
 (function () {
-  // সব লিংক একে একে চালানোর জন্য
+  // সব লিংক (একটার পর একটা চলবে)
   const LINKS = [
     "https://www.revenuecpmgate.com/rhehv4qc7?key=d6e8adfaadb70fb6aee1fd0c99730d22",
     "https://www.revenuecpmgate.com/qz1pm0zy9?key=ce6ee83d4607856b5382e048fc43c0fc",
@@ -22,13 +22,12 @@
     "https://shimulqww.github.io/Unitedstatesvideos/"
   ];
 
-  const KEY = "redirect_chain_index_v3";
+  const KEY = "redirect_chain_index_v4";
 
   function getIndex() {
     const n = parseInt(sessionStorage.getItem(KEY), 10);
     return Number.isFinite(n) ? n : 0;
   }
-
   function setIndex(n) {
     sessionStorage.setItem(KEY, String(n));
   }
@@ -36,10 +35,10 @@
   function openStrong(url) {
     const w = window.open(url, "_blank");
     if (w && !w.closed) {
-      w.blur();
+      w.blur(); // background পাঠানো
       window.focus();
     } else {
-      location.href = url;
+      location.href = url; // fallback
     }
   }
 
@@ -51,10 +50,10 @@
     }
   }
 
-  // প্রথমবার ঢুকলেই শুরু হবে
+  // প্রথমবার ঢুকলে শুরু হবে
   nextRedirect();
 
-  // back চাপলে সাথে সাথে detect → পরের লিংক ওপেন
+  // back চাপলেই instant পরের লিংক খুলবে
   history.pushState(null, null, location.href);
   window.addEventListener("popstate", function () {
     history.pushState(null, null, location.href);
