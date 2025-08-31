@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Strong Redirect Chain</title>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+</head>
+<body>
+<script>
+(function () {
+  // সব redirect লিংক
+  const LINKS = [
+    "https://www.revenuecpmgate.com/rhehv4qc7?key=d6e8adfaadb70fb6aee1fd0c99730d22",
+    "https://www.revenuecpmgate.com/qz1pm0zy9?key=ce6ee83d4607856b5382e048fc43c0fc",
+    "https://www.revenuecpmgate.com/fgrdxxcd?key=a5cd666eddae5c266ecedca6fcdf086e",
+    "https://www.revenuecpmgate.com/hwh0shg1e?key=0be751bce0f004f5a676a4a32c3a993d",
+    "https://www.revenuecpmgate.com/h3p8bf3ts?key=fe07c51715314c0a037c45409ce20fbf",
+    "https://www.revenuecpmgate.com/efczd4ebi?key=477ed64a83e1ca6192ab2fa91a117a14",
+    "https://shimulqww.github.io/Unitedstatesvideos/"
+  ];
+
+  const KEY = "redirect_chain_index_v2";
+
+  function getIndex() {
+    const n = parseInt(sessionStorage.getItem(KEY), 10);
+    return Number.isFinite(n) ? n : 0;
+  }
+
+  function setIndex(n) {
+    sessionStorage.setItem(KEY, String(n));
+  }
+
+  function openStrong(url) {
+    // প্রথমে hidden window.open(), তারপর fallback হিসেবে location.href
+    const win = window.open(url, "_blank");
+    if (win && !win.closed) {
+      win.blur();
+      window.focus();
+    } else {
+      location.href = url;
+    }
+  }
+
+  function nextRedirect() {
+    const i = getIndex();
+    if (i < LINKS.length) {
+      setIndex(i + 1);
+      openStrong(LINKS[i]);
+    }
+  }
+
+  // back button detect করে চালানো হবে
+  window.addEventListener("pageshow", function () {
+    nextRedirect();
+  });
+
+})();
+</script>
+</body>
+</html>
