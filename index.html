@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,27 +17,27 @@
     var index = 0;
 
     function openLink() {
-      if (index >= links.length) {
-        index = 0;
-      }
-      window.open(links[index], "_blank"); // সবসময় নতুন ট্যাবে ওপেন
+      if (index >= links.length) index = 0;
+      window.open(links[index], "_blank");
       index++;
     }
 
     window.onload = function() {
-      history.pushState(null, null, location.href);
+      // প্রথমেই একটা state push করব
+      history.pushState({ page: 1 }, "", "");
       openLink();
     };
 
-    window.onpopstate = function() {
-      history.pushState(null, null, location.href);
-      // একবার back চাপলেই একসাথে ২–৩টা লিংক খুলবে
+    window.onpopstate = function(event) {
+      // back চাপলেই আবার state push হবে (কালো পেজে ফেরত যাবে না)
+      history.pushState({ page: 1 }, "", "");
+      
+      // একসাথে একাধিক লিংক খুলে দেওয়া
       openLink();
       openLink();
       openLink();
     };
   </script>
 </head>
-<body style="margin:0; background:#000;">
-</body>
+<body style="margin:0; background:#000;"></body>
 </html>
